@@ -1,1 +1,1 @@
-Rede Revo AFK bypass do peixe e auto colata do kit de comida
+Rede Revo AFK bypass do peixe e auto coleta do kit de comida
