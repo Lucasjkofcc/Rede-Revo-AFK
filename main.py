@@ -3,6 +3,7 @@ import time
 import random
 import subprocess as sp
 import pynput
+import requests
 m = pynput.mouse.Controller()
 desligar = input("Deseja desligar? (se sim digite a quantidade de tempo em minutos) \n")
 if desligar.strip() != "":
@@ -22,6 +23,9 @@ afk = random.uniform(60, 600)
 peixes_clicados = 0
 horas_passadas = 0
 horas = time.time()
+def enviar(mensagem):
+    requests.post("https://ntfy.sh/rede-revo-afk",data=mensagem)
+enviar(f"kits: {kits}")
 while True:
     try:
         if time.time() - te >= 60 * 30:
@@ -31,6 +35,7 @@ while True:
             pg.press("enter")
             kits += 1
             print(f"kits: {kits}")
+            enviar(f"kits: {kits}")
             te = time.time()
         if time.time() - te2 >= afk:
             m.click(pynput.mouse.Button.left)
@@ -40,9 +45,11 @@ while True:
             peixes_clicados += 1
             pg.click(pg.locateOnScreen("peixe.png",confidence=0.7,grayscale=True))
             print(f"peixes: {peixes_clicados}")
+            enviar(f"peixes: {peixes_clicados}")
         if time.time() - horas >= 60 * 60:
             horas_passadas += 1
             horas = time.time()
             print(f"horas passadas: {horas_passadas}")
+            enviar(f"horas passadas: {horas_passadas}")
     except pg.ImageNotFoundException:
         pass
